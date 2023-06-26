@@ -40,6 +40,11 @@ func init() {
 }
 
 func get_arkose_token() (string, error) {
+	if http_proxy != "" {
+		client.SetProxy(http_proxy)
+		println("Proxy set:" + http_proxy)
+	}
+
 	bda := arkose.Encrypt(bx, bv+bw)
 	bda = base64.StdEncoding.EncodeToString([]byte(bda))
 	form := url.Values{
